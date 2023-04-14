@@ -26,7 +26,12 @@ function Courseform() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const newFormData = { ...formData, term: termvalue };
-        axios.post('http://127.0.0.1:8000/courses', newFormData)
+        const token = localStorage.getItem("access_token");
+        axios.post('http://127.0.0.1:8000/courses', newFormData,{
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      })
           .then(response => {
             navigate('/');
             // do something with the response

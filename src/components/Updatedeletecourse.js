@@ -14,7 +14,12 @@ function Updatedeletecourse() {
   });
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/courses/${id}`)
+    const token = localStorage.getItem("access_token");
+    axios.get(`http://127.0.0.1:8000/courses/${id}`, {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  })
       .then(response => {
         const data = response.data[0];
         setFormData({
@@ -32,7 +37,12 @@ function Updatedeletecourse() {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    axios.put(`http://127.0.0.1:8000/courses/${id}`, formData)
+    const token = localStorage.getItem("access_token");
+    axios.put(`http://127.0.0.1:8000/courses/${id}`, formData, {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  })
       .then(response => {
         navigate('/');
       })
@@ -43,7 +53,12 @@ function Updatedeletecourse() {
 
   const handleDelete = (event) => {
     event.preventDefault();
-    axios.delete(`http://127.0.0.1:8000/courses/${id}`)
+    const token = localStorage.getItem("access_token");
+    axios.delete(`http://127.0.0.1:8000/courses/${id}`, {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  })
       .then(response => {
         navigate('/');
       })

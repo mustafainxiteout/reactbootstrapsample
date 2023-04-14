@@ -21,7 +21,12 @@ function Courses() {
   };
 
   const getCourses = () => {
-    axios.get('http://127.0.0.1:8000/courses')
+    const token = localStorage.getItem("access_token");
+    axios.get('http://127.0.0.1:8000/courses',{
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  })
       .then(response => {
         setCourses(response.data);
       })
