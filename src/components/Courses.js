@@ -40,6 +40,7 @@ function Courses() {
       <div className="w-full m-5 mt-2 px-6 lg:px-8">
       {isLoggedIn ? (
         <div className='d-flex justify-content-end gap-3 px-8 py-4'>
+          <Link to='/dashboard' className='button rounded-4 py-1 px-3 fs-6 fw-semibold text-black border border-success p-1 ml-2 btn shadow'>Dashboard</Link>
         <Link to='/add_courses' className='button rounded-4 py-1 px-3 fs-6 fw-semibold text-black border border-success p-1 ml-2 btn shadow'>Add Course</Link>
         <button onClick={handleLogout} className='rounded-4 py-1 px-3 fs-6 fw-semibold text-white border border-success p-1 ml-2 btn btn-success shadow-lg'>Signout</button>
         </div>
