@@ -31,7 +31,7 @@ function StaffDash() {
         <p className='pt-2'>101 points</p>
         </div>
         </div>
-        <Link to='/dashboard' className='button rounded-4 py-3 px-3 fs-6 fw-semibold text-white border border-success p-1 ml-2 btn btn-success shadow-lg'>View Your Details</Link>
+        <Link to='/user_details' className='button rounded-4 py-3 px-3 fs-6 fw-semibold text-white border border-success p-1 ml-2 btn btn-success shadow-lg'>View Your Details</Link>
       </div>
   )
 }

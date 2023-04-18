@@ -25,7 +25,7 @@ root.render(
       <Route exact path="/" element={<PrivateRoute/>}><Route exact path="/edit/:id/"  element={<Updatedeletecourse/>}/></Route>
       <Route exact path="/" element={<PrivateRoute/>}><Route exact path="/dashboard" element={isAdmin ? <AdminDash /> : <StaffDash />} isAdmin={isAdmin}/></Route>
       <Route exact path="/" element={<PrivateRoute/>}><Route exact path="/add_staff" element={isAdmin ? <AddStaff/> : <Navigate to="/" />} isAdmin={isAdmin}/></Route>
-      <Route exact path="/" element={<PrivateRoute/>}><Route exact path="/user_details" element={isAdmin ? <UserDetails/> : <Navigate to="/" />} isAdmin={isAdmin}/></Route>
+      <Route exact path="/" element={<PrivateRoute/>}><Route exact path="/user_details" element={isAdmin ? <UserDetails/> : <UserDetails/>} isAdmin={isAdmin}/></Route>
       <Route exact path="/signup" element={<RegisterForm/>}></Route>
       <Route exact path="/signin" element={<LoginForm/>}></Route>
       <Route exact path="/forgot_password" element={<Forgotpassword/>}></Route>
