@@ -16,7 +16,7 @@ import AddStaff from './components/AddStaff';
 import UserDetails from './components/UserDetails';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const isAdmin = false;
+const isAdmin = true;
 root.render(
   <Router>
     <Routes>

@@ -1,10 +1,11 @@
 import React from "react";
-import Courses from "./components/Courses";
+import Navigation from "./components/Navigation";
+
 
 function App() {
   return (
     <div className="googlesans">
-      <Courses/>
+      <Navigation/>
     </div>
   );
 }
