@@ -18,8 +18,21 @@ function Courseform() {
 
     // check if access token is set in local storage
     useEffect(() => {
-      if (localStorage.getItem("access_token")) {
-      setIsLoggedIn(true);
+      const expirationTime = localStorage.getItem('expiration_time');
+      if (expirationTime && Date.now() < Number(expirationTime)) {
+        // Token is valid
+        const timeRemaining = Number(expirationTime) - Date.now();
+        setIsLoggedIn(true);
+        // Set a timeout to remove the token when it expires
+        const timeoutId = setTimeout(() => {
+          setIsLoggedIn(false);
+          // Token is expired or missing
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('expiration_time');
+        }, timeRemaining);
+  
+        // Clean up the timeout when the component unmounts or the token changes
+        return () => clearTimeout(timeoutId);
       }
     }, []);
     

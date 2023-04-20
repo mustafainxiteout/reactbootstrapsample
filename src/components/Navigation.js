@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 
 function Navigation() {
   const [isToggled, setIsToggled] = useState(false);
@@ -153,7 +154,7 @@ function Navigation() {
         <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Login Screens:</h6>
-            <a className="collapse-item" href="/">Login</a>
+            <Link className="collapse-item" to="/signin">Login</Link>
             <a className="collapse-item" href="/">Register</a>
             <a className="collapse-item" href="/">Forgot Password</a>
             <div className="collapse-divider" />

@@ -1,22 +1,17 @@
 import React,{ useState, useEffect } from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import toast, { Toaster } from "react-hot-toast";
 
 function Courses() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [toastMessage, setToastMessage] = useState('');
 
-  // check if access token is set in local storage
-  useEffect(() => {
-    if (localStorage.getItem("access_token")) {
-      setIsLoggedIn(true);
-      getCourses();
-    }
-  }, []);
-  
   const handleLogout = () => {
     // remove access token from local storage
     localStorage.removeItem("access_token");
+    localStorage.removeItem('expiration_time');
     setIsLoggedIn(false);
   };
 
@@ -30,14 +25,47 @@ function Courses() {
       .then(response => {
         setCourses(response.data);
       })
-      .catch(error => {
-        console.error(error);
+      .catch((error) => {
+        // Handle the error response from the API
+        setToastMessage(error.response.data.message);
+        // remove access token from local storage
+        handleLogout();
+        toast(toastMessage);
       });
   };
+
+  
+  // check if access token is set in local storage
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    const expirationTime = localStorage.getItem('expiration_time');
+
+    if (token && expirationTime && Date.now() < Number(expirationTime)) {
+      // Token is valid
+      setIsLoggedIn(true);
+      getCourses();
+      const timeRemaining = Number(expirationTime) - Date.now();
+
+      // Set a timeout to remove the token when it expires
+      const timeoutId = setTimeout(() => {
+        toast('Session Expired')
+        handleLogout();
+      }, timeRemaining);
+
+      // Clean up the timeout when the component unmounts or the token changes
+      return () => clearTimeout(timeoutId);
+    }
+    else {
+      // Token is expired or missing
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('expiration_time');
+    }
+  }, []);
 
   return (
     <div>
       <div className="w-full m-5 mt-2 px-6 lg:px-8">
+        <Toaster/>
       {isLoggedIn ? (
         <div className='d-flex justify-content-end gap-3 px-8 py-4'>
           <Link to='/dashboard' className='button rounded-4 py-1 px-3 fs-6 fw-semibold text-black border border-success p-1 ml-2 btn shadow'>Dashboard</Link>

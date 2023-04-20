@@ -22,6 +22,14 @@ const handleSubmit = (event) => {
       // Handle the successful response from the API
       // Save the access token to local storage
       localStorage.setItem('access_token', response.data.access_token);
+      // Set the access token in local storage
+      Object.defineProperty(localStorage, 'access_token', {
+        value: response.data.access_token,
+        writable: false // make the property non-writable
+      });
+      // Set the expiration time to 2 minutes from now
+      const expirationTime = new Date().getTime() + 2 * 60 * 1000;
+      localStorage.setItem('expiration_time', expirationTime);
       navigate('/');
     })
     .catch((error) => {

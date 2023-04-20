@@ -15,6 +15,7 @@ function Updatedeletecourse() {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    const expirationTime = localStorage.getItem('expiration_time');
     axios.get(`http://127.0.0.1:8000/courses/${id}`, {
       headers: {
           Authorization: `Bearer ${token}`
@@ -31,9 +32,22 @@ function Updatedeletecourse() {
         });
       })
       .catch(error => {
-        console.error(error);
+        navigate('/');
       });
-  }, [id]);
+
+      if (expirationTime && Date.now() < Number(expirationTime)) {
+        // Token is valid
+        const timeRemaining = Number(expirationTime) - Date.now();
+  
+        // Set a timeout to remove the token when it expires
+        const timeoutId = setTimeout(() => {
+          navigate('/');
+        }, timeRemaining);
+  
+        // Clean up the timeout when the component unmounts or the token changes
+        return () => clearTimeout(timeoutId);
+      }
+  }, [id,navigate]);
 
   const handleUpdate = (event) => {
     event.preventDefault();
